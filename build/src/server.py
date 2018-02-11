@@ -19,6 +19,13 @@ from flask_socketio import SocketIO
 from bowtie._component import COMPONENT_REGISTRY
 
 
+# python 2 compatibility
+try:
+    FileNotFoundError
+except NameError:
+    FileNotFoundError = OSError
+
+
 class GetterNotDefined(AttributeError):
     pass
 
@@ -100,16 +107,26 @@ def getbundle():
     bundle_path = basedir + '/static/bundle.js'
     bundle_path_gz = bundle_path + '.gz'
 
-    if (os.path.isfile(bundle_path_gz) and
-            os.path.getmtime(bundle_path_gz) > os.path.getmtime(bundle_path)):
-        bundle = open(bundle_path + '.gz', 'rb').read()
-        response = flask.make_response(bundle)
-        response.headers['Content-Encoding'] = 'gzip'
-        response.headers['Vary'] = 'Accept-Encoding'
-        response.headers['Content-Length'] = len(response.data)
-        return response
-    else:
-        return open(bundle_path, 'r').read()
+    try:
+        if os.path.getmtime(bundle_path) > os.path.getmtime(bundle_path_gz):
+            return open(bundle_path, 'r').read()
+        else:
+            bundle = open(bundle_path_gz, 'rb').read()
+            response = flask.make_response(bundle)
+            response.headers['Content-Encoding'] = 'gzip'
+            response.headers['Vary'] = 'Accept-Encoding'
+            response.headers['Content-Length'] = len(response.data)
+            return response
+    except FileNotFoundError:
+        if os.path.isfile(bundle_path_gz):
+            bundle = open(bundle_path_gz, 'rb').read()
+            response = flask.make_response(bundle)
+            response.headers['Content-Encoding'] = 'gzip'
+            response.headers['Vary'] = 'Accept-Encoding'
+            response.headers['Content-Length'] = len(response.data)
+            return response
+        else:
+            return open(bundle_path, 'r').read()
 
 
 
