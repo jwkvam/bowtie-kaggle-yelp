@@ -11,10 +11,10 @@ import pandas as pd
 import plotlywrapper as pw
 
 
-business = pd.read_csv('yelp_business.csv')
+business = pd.read_csv('yelp_business.csv.gz')
 business = business[business.review_count >= 50]
-checkin = pd.read_csv('yelp_checkin.csv')
-reviews = pd.read_pickle('reviewsub.pkl')
+checkin = pd.read_csv('yelp_checkin.csv.gz')
+reviews = pd.read_pickle('reviewsub.pkl.gz')
 
 
 def unique_categories():
