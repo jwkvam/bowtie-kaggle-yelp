@@ -11,22 +11,21 @@ import pandas as pd
 import plotlywrapper as pw
 
 
-business = pd.read_csv('yelp_business.csv.gz')
-business = business[business.review_count >= 50]
-checkin = pd.read_csv('yelp_checkin.csv.gz')
+business = pd.read_pickle('yelp_business.pkl.gz')
+checkin = pd.read_pickle('yelp_checkin.pkl.gz')
 reviews = pd.read_pickle('reviewsub.pkl.gz')
 
 
-def unique_categories():
+def dropdown_categories():
     allcats = business.categories.str.split(';')
     cats = []
     for cat in allcats:
         cats += cat
-    return list(set(cats))
+    categories = sorted(set(cats))
+    return Dropdown(values=categories, labels=categories, caption='Category')
 
-categories = sorted(unique_categories())
 
-catdd = Dropdown(values=categories, labels=categories, caption='Category')
+catdd = dropdown_categories()
 stars = Plotly()
 revdate = Plotly()
 busy = Plotly()
