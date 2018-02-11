@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 from bowtie import App, command
-from bowtie.visual import Plotly, Table, Markdown
+from bowtie.visual import Plotly
 
 from bowtie.control import Dropdown
 from bowtie import cache
-import seaborn
 import numpy as np
 import pandas as pd
 import plotlywrapper as pw
