@@ -1,5 +1,9 @@
 # kaggle-yelp-dataset
 
+A [Bowtie](https://github.com/jwkvam/bowtie) dashboard.
+
+https://kaggle-yelp.herokuapp.com/
+
 https://www.kaggle.com/yelp-dataset/yelp-dataset
 
 ## Run
