@@ -1,4 +1,4 @@
-# kaggle-yelp-dataset
+# bowtie-kaggle-yelp
 
 A [Bowtie](https://github.com/jwkvam/bowtie) dashboard.
 
